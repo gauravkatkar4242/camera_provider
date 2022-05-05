@@ -70,19 +70,13 @@ class _CameraTestPageState extends State<CameraTestPage>
       return Column(
         children: [
           const Expanded(child: CameraFeed()),
-          ElevatedButton(
-              onPressed: () {
-                // Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => const Page1()));
-                context.read<CameraPermissionProvider>().disAblePermissions();
-              },
-              child: const Text("All Good, Go next"))
+          ElevatedButton(onPressed: (){
+            openAppSettings();
+          }, child: Text("Open Settings"))
         ],
       );
     }
-    else if (
-        cameraPermission == PermissionStatus.denied ||
-        micPermission == PermissionStatus.denied) {
+    else{
       // context.read<CameraPermissionProvider>().requestPermission();
       return Column(
         children: [
@@ -96,23 +90,23 @@ class _CameraTestPageState extends State<CameraTestPage>
         ],
       );
     }
-    else if (cameraPermission == PermissionStatus.permanentlyDenied ||
-        micPermission == PermissionStatus.permanentlyDenied) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Please allow camera permissions"),
-          ElevatedButton(
-              onPressed: () {
-                openAppSettings();
-              },
-              child: const Text("Open Settings"))
-        ],
-      );
-    } else {
-      return Center(
-          child: Text(
-              '${cameraPermission} Please allow Camera and Microphone permissions through settings'));
-    }
+    // else if (cameraPermission == PermissionStatus.permanentlyDenied ||
+    //     micPermission == PermissionStatus.permanentlyDenied) {
+    //   return Column(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       const Text("Please allow camera permissions"),
+    //       ElevatedButton(
+    //           onPressed: () {
+    //             openAppSettings();
+    //           },
+    //           child: const Text("Open Settings"))
+    //     ],
+    //   );
+    // } else {
+    //   return Center(
+    //       child: Text(
+    //           '${cameraPermission} Please allow Camera and Microphone permissions through settings'));
+    // }
   }
 }

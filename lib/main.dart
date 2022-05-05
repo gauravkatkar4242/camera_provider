@@ -2,6 +2,7 @@ import 'package:camera_provider/camera_test_page.dart';
 import 'package:camera_provider/page_1.dart';
 import 'package:camera_provider/proctering/provider/camera_permission_provider.dart';
 import 'package:camera_provider/proctering/provider/camera_provider.dart';
+import 'package:camera_provider/sample_1.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget{
           providers: [
             ChangeNotifierProvider(create: (_) => CameraPermissionProvider()),
           ],
-          child:const CameraTestPage()
+          child:const Sample1()
       ),
     );
   }

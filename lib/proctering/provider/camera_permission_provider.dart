@@ -25,10 +25,4 @@ class CameraPermissionProvider with ChangeNotifier {
     getPermissionStatus();
   }
 
-  void disAblePermissions() {
-    cameraPermission = Permission.camera.isDenied;
-    micPermission = Permission.microphone.isDenied;
-    print("Disabled");
-    getPermissionStatus();
-  }
 }
