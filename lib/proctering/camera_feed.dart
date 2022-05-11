@@ -3,22 +3,14 @@ import 'package:camera_provider/proctering/provider/camera_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CameraFeed extends StatefulWidget {
+class CameraFeed extends StatelessWidget {
   const CameraFeed({Key? key}) : super(key: key);
 
   @override
-  State<CameraFeed> createState() => _CameraFeedState();
-}
-
-class _CameraFeedState extends State<CameraFeed> {
-  @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-        ChangeNotifierProvider(create: (_) => CameraProvider()),
-    ],
-    child:const CameraScreen()
-    );
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => CameraProvider()),
+    ], child: const CameraScreen());
   }
 }
 
@@ -29,8 +21,8 @@ class CameraScreen extends StatefulWidget {
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver {
-
+class _CameraScreenState extends State<CameraScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance!.addObserver(this);
@@ -42,25 +34,28 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    print("$state ********************** from camera feed");
     if (state == AppLifecycleState.inactive) {
-      print("State inactive");
       context.read<CameraProvider>().disposeCamera();
-    }
-    else if (state == AppLifecycleState.resumed) {
-      print("State resumed");
+      print("From Camera_feed - State inactive camera Disposed");
+      Navigator.of(context).pop();
+    } else if (state == AppLifecycleState.resumed) {
       context.read<CameraProvider>().initCamera();
+      print("From Camera_feed - State resumed Camera initialized");
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    if (context.watch<CameraProvider>().controller == null || !context.watch<CameraProvider>().controller!.value.isInitialized) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    return CameraPreview(context.watch<CameraProvider>().controller!);
+    return Consumer<CameraProvider>(builder: (context, cameraProvider, child) {
+      if (cameraProvider.controller == null ||
+          !cameraProvider.controller!.value.isInitialized) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      return CameraPreview(cameraProvider.controller!);
+    });
   }
 }
-

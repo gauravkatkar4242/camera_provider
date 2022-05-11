@@ -4,9 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class CameraProvider with ChangeNotifier  {
   CameraController? _controller;
-
   CameraController? get controller => _controller;
-
 
   CameraProvider(){
     initCamera();
@@ -48,9 +46,6 @@ class CameraProvider with ChangeNotifier  {
     } on CameraException catch (e) {
       // exception handler to be added
     }
-  }
-  void test(){
-    notifyListeners();
   }
 
   void disposeCamera(){

@@ -1,8 +1,10 @@
 import 'package:camera_provider/black_page.dart';
 import 'package:camera_provider/camera_test_page.dart';
 import 'package:camera_provider/proctering/camera_feed.dart';
+import 'package:camera_provider/proctering/provider/camera_permission_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Page1 extends StatefulWidget{
   const Page1({Key? key}) : super(key: key);
@@ -22,9 +24,8 @@ class _Page1State extends State<Page1> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     print("$state ********************** from page 1");
     if (state == AppLifecycleState.inactive) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const BlackPage()), (Route<dynamic> route) => false);
     }
+
   }
   @override
   void dispose() {
@@ -80,7 +81,7 @@ class _Page1State extends State<Page1> with WidgetsBindingObserver {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => const Page1()));
           },
           child: CircularProgressIndicator(),
